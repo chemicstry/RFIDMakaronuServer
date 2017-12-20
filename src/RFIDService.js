@@ -85,9 +85,11 @@ class RFIDService
         // Authenticate
         var res = await tag.Authenticate();
 
-        if (res)
+        if (res) {
+            // Send unlock signal
+            this.eventInterface.Send("unlock", {});
             Log.info("RFIDService::OnNewTarget(): Authentication success!");
-        else
+        } else
             Log.error("RFIDService::OnNewTarget(): Authentication FAILED!");
 
         // Release target
